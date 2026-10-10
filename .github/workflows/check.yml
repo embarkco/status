@@ -1,0 +1,40 @@
+# Every five minutes, from GitHub (outside our own servers): ask each
+# service in checks.json, and save what changed (scripts/check.mjs).
+# GitHub may start a scheduled run a few minutes late when it's busy; the
+# page says when it last checked. A public repository's Actions minutes
+# are free.
+name: Check
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+# one round at a time: a slow round never races the next one's commit
+concurrency:
+  group: check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - run: node scripts/check.mjs
+      - name: Save what changed
+        run: |
+          if [ -n "$(git status --porcelain data)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data
+            git commit -m "Status at $(date -u +%Y-%m-%dT%H:%MZ)"
+            git pull --rebase --quiet
+            git push
+          fi

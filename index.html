@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Broker&amp;Agent Status</title>
+    <meta name="description" content="Whether Broker&amp;Agent's workspace, site dashboard, sign-in and website chat are working right now." />
+    <meta name="color-scheme" content="light dark" />
+    <!-- GitHub Pages can't send headers, so the policy rides in the page:
+         only this site's own files, nothing inline, no frames, no forms -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="assets/logo-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script src="assets/app.js" defer></script>
+  </head>
+  <body>
+    <main class="page">
+      <header class="top">
+        <a class="brand" href="https://brokerandagent.com" aria-label="Broker&amp;Agent">
+          <span class="mark" aria-hidden="true"></span>
+          <span>Broker&amp;Agent <span class="brand-sub">Status</span></span>
+        </a>
+      </header>
+
+      <div id="now" class="now" aria-live="polite">
+        <section class="card allgood">
+          <span class="dot dot-wait" aria-hidden="true"></span>
+          <h1>Checking…</h1>
+        </section>
+      </div>
+
+      <section aria-labelledby="services-title">
+        <div class="section-head">
+          <h2 id="services-title" class="sr-only">Services</h2>
+          <span class="muted small">Uptime over the past <span class="d90">90</span><span class="d60">60</span> days</span>
+        </div>
+        <ul class="card services" id="services"></ul>
+      </section>
+
+      <section aria-labelledby="history-title">
+        <h2 id="history-title" class="history-title">Past incidents</h2>
+        <div id="history"></div>
+      </section>
+
+      <footer class="foot muted small">
+        <span>Something wrong that isn't shown here? <a href="mailto:support@brokerandagent.com">support@brokerandagent.com</a></span>
+        <a href="https://brokerandagent.com">brokerandagent.com</a>
+      </footer>
+    </main>
+    <div id="tip" class="tip" role="tooltip" hidden></div>
+    <noscript><p class="page muted">This page needs JavaScript to show the checks. The data is in <a href="data/state.json">data/state.json</a>.</p></noscript>
+  </body>
+</html>

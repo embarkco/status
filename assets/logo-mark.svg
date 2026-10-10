@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1404 1385" role="img" aria-label="Broker &amp; Agent Solutions">
+  <title>Broker &amp; Agent Solutions</title>
+  <!-- Two stepped structures with parallel rooflines (slope -0.25). Every
+       interior block is a knockout: one path, one fill, evenodd — so the mark
+       always prints as a single ink and the blocks take whatever sits behind. -->
+  <path fill="currentColor" fill-rule="evenodd" d="
+    M0 552 L796 356 L796 149 L1404 0 L1404 1385 L0 1385 Z
+    M271 636 h309 v244 h-309 Z
+    M271 1010 h309 v244 h-309 Z
+    M997 327 h206 v300 h-206 Z
+    M997 992 h206 v393 h-206 Z
+  "/>
+</svg>

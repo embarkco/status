@@ -1,0 +1,476 @@
+/* HQ's look (apps/platform/src/app/design-2026.css): Cool light and
+   Graphite dark, following the device's setting; big soft cards; the
+   teal accent; greys mixed from the ink so they share its temperature.
+   The layout follows the familiar status page (Claude's, Stripe's):
+   what's wrong now on top, each service with ninety day-bars and its
+   uptime, then past incidents by day. */
+
+:root {
+  --page: #f2f5f5;
+  --card: #ffffff;
+  --ink: #16232b;
+  --muted: color-mix(in srgb, var(--ink) 66%, transparent);
+  --faint: color-mix(in srgb, var(--ink) 45%, transparent);
+  --line: color-mix(in srgb, var(--ink) 12%, transparent);
+  --rule: color-mix(in srgb, var(--ink) 18%, transparent);
+  --accent: #2f9e8c;
+  --up: #2f9461;
+  --slow: #d39a1c;
+  --down: #e0613a;
+  --none: color-mix(in srgb, var(--ink) 9%, var(--card));
+  --shadow: 0 1px 2px rgba(14, 13, 11, 0.04), 0 6px 24px rgba(14, 13, 11, 0.05);
+  --tip-shadow: 0 2px 6px rgba(14, 13, 11, 0.08), 0 12px 32px rgba(14, 13, 11, 0.12);
+  --r-card: 28px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0f1012;
+    --card: #17181b;
+    --ink: #eceef1;
+    --muted: color-mix(in srgb, var(--ink) 60%, transparent);
+    --faint: color-mix(in srgb, var(--ink) 42%, transparent);
+    --line: color-mix(in srgb, var(--ink) 9%, transparent);
+    --rule: color-mix(in srgb, var(--ink) 16%, transparent);
+    --accent: #62c4b0;
+    --up: #5fc08c;
+    --slow: #e9b04c;
+    --down: #f2855e;
+    --none: #26272c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 8px 24px rgba(0, 0, 0, 0.22);
+    --tip-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 14px 36px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 36px 16px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 13px;
+}
+
+/* ---------- the top ---------- */
+
+.top {
+  padding: 0 4px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+  text-decoration: none;
+}
+
+.brand-sub {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.mark {
+  width: 24px;
+  height: 24px;
+  background: currentColor;
+  -webkit-mask: url(logo-mark.svg) center / contain no-repeat;
+  mask: url(logo-mark.svg) center / contain no-repeat;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--r-card);
+  box-shadow: var(--shadow);
+}
+
+/* ---------- now ---------- */
+
+.now {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.allgood {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 28px;
+}
+
+.allgood h1 {
+  font-size: 20px;
+}
+
+.dot {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 5px color-mix(in srgb, currentColor 18%, transparent);
+}
+.dot-wait {
+  color: var(--faint);
+}
+.dot-up {
+  color: var(--up);
+}
+
+/* something wrong: the card takes a tint of its colour, a mark and the
+   title, then what we've said. Calm, not an alarm slab. */
+.incident {
+  background: color-mix(in srgb, var(--tone) 7%, var(--card));
+  box-shadow: var(--shadow), inset 0 0 0 1px color-mix(in srgb, var(--tone) 28%, transparent);
+}
+
+.incident-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px 0;
+}
+
+.incident-head h1 {
+  font-size: 19px;
+}
+
+/* the "all good" dot's shape, gently fading in and out */
+.pulse {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--tone);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--tone) 18%, transparent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+}
+
+.incident-body {
+  padding: 12px 28px 22px 54px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.update p {
+  line-height: 1.55;
+}
+
+.update .when {
+  margin-top: 2px;
+}
+
+.tone-down {
+  --tone: var(--down);
+}
+.tone-slow {
+  --tone: var(--slow);
+}
+.tone-notice {
+  --tone: var(--accent);
+}
+
+/* ---------- services ---------- */
+
+.section-head {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 6px 8px;
+}
+
+.services {
+  list-style: none;
+  margin: 0;
+  padding: 4px 28px;
+}
+
+.service {
+  padding: 20px 0 18px;
+  border-top: 1px solid var(--line);
+}
+
+.service:first-child {
+  border-top: 0;
+}
+
+.service-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.service-name {
+  font-weight: 600;
+}
+
+.state {
+  flex: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+.state-up {
+  color: var(--up);
+}
+.state-slow {
+  color: var(--slow);
+}
+.state-down {
+  color: var(--down);
+}
+.state-wait {
+  color: var(--faint);
+}
+
+.bars {
+  display: grid;
+  grid-template-columns: repeat(90, 1fr);
+  gap: 2px;
+  height: 34px;
+  margin-top: 12px;
+}
+
+.bar {
+  border-radius: 2px;
+  background: var(--none);
+  transition: opacity 120ms ease;
+}
+.bar-up {
+  background: var(--up);
+}
+.bar-slow {
+  background: var(--slow);
+}
+.bar-down {
+  background: var(--down);
+}
+.bars:hover .bar {
+  opacity: 0.55;
+}
+.bars:hover .bar:hover,
+.bar.is-on {
+  opacity: 1;
+}
+
+/* "90 days ago ── 99.98% uptime ── Today" */
+.span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.span .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.span .pct {
+  color: var(--muted);
+}
+
+/* ---------- the hover card ---------- */
+
+.tip {
+  position: fixed;
+  z-index: 10;
+  width: 260px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--tip-shadow);
+  border: 1px solid var(--line);
+  pointer-events: none;
+  font-size: 13.5px;
+}
+
+.tip-date {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.tip-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tip-line .k {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.k-down {
+  background: var(--down);
+}
+.k-slow {
+  background: var(--slow);
+}
+
+.tip-line .grow {
+  flex: 1;
+}
+
+/* ---------- past incidents ---------- */
+
+.history-title {
+  font-size: 19px;
+  padding: 0 4px 6px;
+}
+
+.day {
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--line);
+}
+
+.day h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.day .quiet {
+  color: var(--faint);
+  font-size: 14px;
+}
+
+.past {
+  margin-top: 10px;
+}
+
+.past h4 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--tone);
+}
+
+.past .update + .update {
+  margin-top: 8px;
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 4px 4px 0;
+}
+
+@media (max-width: 560px) {
+  .page {
+    gap: 22px;
+    padding-top: 26px;
+  }
+  .services {
+    padding: 2px 20px;
+  }
+  .allgood,
+  .incident-head {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .incident-body {
+    padding-left: 46px;
+    padding-right: 20px;
+  }
+  .card {
+    border-radius: 24px;
+  }
+  /* sixty days fit a phone */
+  .bars {
+    grid-template-columns: repeat(60, 1fr);
+    height: 30px;
+  }
+  .bars .bar:nth-child(-n + 30) {
+    display: none;
+  }
+}
+
+/* the label follows the bars: ninety days, sixty on a phone */
+.d60 {
+  display: none;
+}
+@media (max-width: 560px) {
+  .d90 {
+    display: none;
+  }
+  .d60 {
+    display: inline;
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "intervalMinutes": 5,
+  "components": [
+    {
+      "id": "workspace",
+      "name": "Workspace",
+      "about": "The CRM: contacts, inbox, calendar, transactions, e-sign, automations.",
+      "url": "https://workspace.brokerandagent.com/api/public/health",
+      "expect": {
+        "status": 200,
+        "json": {
+          "ok": true
+        }
+      }
+    },
+    {
+      "id": "sites",
+      "name": "Site dashboard",
+      "about": "Managing your website: the editor, blog, guides, leads and analytics.",
+      "url": "https://sites.brokerandagent.com/login",
+      "expect": {
+        "status": 200
+      }
+    },
+    {
+      "id": "account",
+      "name": "Sign-in and billing",
+      "about": "Signing in, your account, security and billing.",
+      "url": "https://account.brokerandagent.com/login",
+      "expect": {
+        "status": 200
+      }
+    },
+    {
+      "id": "widget",
+      "name": "Website chat",
+      "about": "The site assistant on our customers' websites.",
+      "url": "https://sites.brokerandagent.com/widget.js",
+      "expect": {
+        "status": 200
+      }
+    },
+    {
+      "id": "mcp",
+      "name": "Claude connector (MCP)",
+      "about": "Your workspace in Claude and other AI assistants.",
+      "url": "https://mcp.brokerandagent.com/",
+      "expect": {
+        "status": 200
+      }
+    },
+    {
+      "id": "marketing",
+      "name": "brokerandagent.com",
+      "about": "Our own website.",
+      "url": "https://brokerandagent.com/",
+      "expect": {
+        "status": 200
+      }
+    }
+  ]
+}
