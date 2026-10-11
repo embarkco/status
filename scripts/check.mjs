@@ -4,8 +4,9 @@
 
    Each service is asked twice before it's called down, ten seconds
    apart. A service that answers but takes more than five seconds is slow.
-   What the page needs is written only when something changed, or once an
-   hour so "last checked" stays honest: about 24 commits a day, not 288.
+   The files always carry the latest check, and the page is published from
+   every run; the history is committed only when something changed, or
+   once an hour: about 24 commits a day, not 288.
 
      data/state.json    each service now: up, slow or down, since when
      data/outages.json  every slow or down stretch, start to end (100 days)
@@ -13,7 +14,7 @@
    No dependencies: Node 22's fetch. `node scripts/check.mjs` runs it
    locally too (it only reads public addresses). */
 
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { appendFileSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const TIMEOUT_MS = 15_000;
 const SLOW_MS = 5_000;
@@ -81,15 +82,16 @@ for (const [id, r] of results) {
 /* services no longer checked leave the page */
 for (const id of Object.keys(state.components)) if (!config.components.some((c) => c.id === id)) delete state.components[id];
 
+/* The files always carry this check (the page published from this run
+   says when it last checked); the history is committed only when
+   something changed, or once an hour (the workflow reads `commit`). */
 const due = !state.writtenAt || now.getTime() - Date.parse(state.writtenAt) >= HEARTBEAT_MS;
-if (changed || due) {
-  state.monitoringSince ??= iso;
-  state.checkedAt = iso;
-  state.writtenAt = iso;
-  const cutoff = now.getTime() - KEEP_DAYS * 86_400_000;
-  write("data/state.json", state);
-  write("data/outages.json", outages.filter((o) => !o.end || Date.parse(o.end) >= cutoff));
-  console.log(changed ? "status changed: written" : "hourly: written");
-} else {
-  console.log("no change: nothing written");
-}
+const commit = changed || due;
+state.monitoringSince ??= iso;
+state.checkedAt = iso;
+if (commit) state.writtenAt = iso;
+const cutoff = now.getTime() - KEEP_DAYS * 86_400_000;
+write("data/state.json", state);
+write("data/outages.json", outages.filter((o) => !o.end || Date.parse(o.end) >= cutoff));
+console.log(changed ? "status changed: kept" : commit ? "hourly: kept" : "no change: published, not kept");
+if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `commit=${commit}\n`);

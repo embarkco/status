@@ -78,6 +78,15 @@ function updatesOf(incident) {
   );
 }
 
+/* "Checked 3 min ago": every five minutes from GitHub, a few late when
+   GitHub is busy; the page re-reads its data every minute */
+function checked(at) {
+  if (!at) return null;
+  const min = Math.max(0, Math.round((Date.now() - Date.parse(at)) / 60_000));
+  const ago = min < 1 ? "just now" : min < 60 ? `${min} min ago` : `${Math.floor(min / 60)} h ago`;
+  return el("span", { class: "checked muted small", title: dateTime(at), text: `Checked ${ago}` });
+}
+
 /* ---------- a day of one service ---------- */
 
 function dayOf(outages, id, dayStart, since) {
@@ -156,7 +165,7 @@ function render(config, state, outages, notices) {
   now.replaceChildren(
     ...(open.length
       ? open.map((i) => el("section", { class: `card incident tone-${i.tone}` }, el("div", { class: "incident-head" }, el("span", { class: "pulse", "aria-hidden": "true" }), el("h1", { text: i.title })), el("div", { class: "incident-body" }, ...updatesOf(i))))
-      : [el("section", { class: "card allgood" }, el("span", { class: `dot ${state.checkedAt ? "dot-up" : "dot-wait"}`, "aria-hidden": "true" }), el("h1", { text: state.checkedAt ? "Everything is looking good" : "Checking…" }))]),
+      : [el("section", { class: "card allgood" }, el("span", { class: `dot ${state.checkedAt ? "dot-up" : "dot-wait"}`, "aria-hidden": "true" }), el("h1", { text: state.checkedAt ? "Everything is looking good" : "Checking…" }), checked(state.checkedAt))]),
   );
 
   /* each service, a bar a day, and its uptime */

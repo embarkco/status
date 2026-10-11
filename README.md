@@ -26,8 +26,9 @@ launch deploy. The Claude connector and brokerandagent.com start on Oct 11.
 Nothing before Oct 8 is shown as up: those days say "Not tracked yet".
 | `index.html`, `assets/` | The page: HQ's look, light or dark as the device is set |
 
-Data is committed only when something changes, plus once an hour, about 24
-commits a day.
+The page is published from every run, so it says when it last checked. The
+history is committed only when something changes, plus once an hour, about
+24 commits a day.
 
 ## What the page says
 
@@ -65,7 +66,7 @@ database). Nothing private goes here: this repository is public.
 
 ## Setup (once)
 
-1. Settings → Pages: deploy from the `main` branch, root folder; custom
-   domain `status.brokerandagent.com` (the `CNAME` file), HTTPS on.
+1. Settings → Pages: source GitHub Actions (the Check workflow publishes);
+   custom domain `status.brokerandagent.com`, HTTPS enforced.
 2. DNS: `status` CNAME to `embarkco.github.io` (Cloudflare, DNS only).
 3. Actions → Check → Run workflow, once, to start.

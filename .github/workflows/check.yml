@@ -1,17 +1,28 @@
 # Every five minutes, from GitHub (outside our own servers): ask each
-# service in checks.json, and save what changed (scripts/check.mjs).
-# GitHub may start a scheduled run a few minutes late when it's busy; the
-# page says when it last checked. A public repository's Actions minutes
-# are free.
+# service in checks.json, keep what changed in the repository (history),
+# and publish the page with the fresh check (scripts/check.mjs). GitHub may
+# start a scheduled run a few minutes late when it's busy; the page says
+# when it last checked. A public repository's Actions minutes are free.
+#
+# The page is published by this workflow (Pages source: GitHub Actions),
+# not built from each commit: a branch-built Pages site has a soft limit of
+# ten builds an hour, and the page is fresh every five minutes while the
+# history is committed only when something changes, or once an hour.
 name: Check
 
 on:
   schedule:
     - cron: "*/5 * * * *"
+  # a notice or a page change goes out at once (the bot's own pushes don't
+  # start workflows, so this never loops)
+  push:
+    branches: [main]
   workflow_dispatch: {}
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 # one round at a time: a slow round never races the next one's commit
 concurrency:
@@ -21,20 +32,29 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - run: node scripts/check.mjs
-      - name: Save what changed
+      - id: check
+        run: node scripts/check.mjs
+      - name: Keep the history
+        if: steps.check.outputs.commit == 'true'
         run: |
-          if [ -n "$(git status --porcelain data)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data
-            git commit -m "Status at $(date -u +%Y-%m-%dT%H:%MZ)"
-            git pull --rebase --quiet
-            git push
-          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git commit -m "Status at $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase --quiet
+          git push
+      - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: .
+      - id: deploy
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
