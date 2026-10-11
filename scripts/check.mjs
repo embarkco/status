@@ -71,7 +71,8 @@ for (const [id, r] of results) {
     const open = outages.find((o) => o.component === id && !o.end);
     if (open) open.end = iso;
     if (r.status !== "up") outages.push({ component: id, kind: r.status, start: iso, end: null, why: r.why ?? "slow to answer" });
-    state.components[id] = { status: r.status, since: iso, ms: r.ms };
+    /* when this service's history begins: its first check, kept for good */
+    state.components[id] = { status: r.status, since: iso, ms: r.ms, monitoringSince: before?.monitoringSince ?? iso };
   } else {
     state.components[id] = { ...before, ms: r.ms };
   }

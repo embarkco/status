@@ -16,6 +16,14 @@ the data files beside it.
 | `data/state.json` | Each service now, and since when |
 | `data/outages.json` | Every slow or down stretch, start to end (kept 100 days) |
 | `data/notices.json` | Notices written by hand (below) |
+
+**History before Oct 11 2026.** The page went public on Oct 11 2026. For the
+Workspace, the site dashboard, sign-in and website chat, the days from Oct 8
+2026 (16:06 UTC) come from HQ's own checks of the same addresses (HQ →
+Health, every five minutes, from Cloudflare rather than GitHub), including
+the one outage they saw: 5 to 15 minutes without an answer during the Oct 8
+launch deploy. The Claude connector and brokerandagent.com start on Oct 11.
+Nothing before Oct 8 is shown as up: those days say "Not tracked yet".
 | `index.html`, `assets/` | The page: HQ's look, light or dark as the device is set |
 
 Data is committed only when something changes, plus once an hour, about 24

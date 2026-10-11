@@ -474,3 +474,8 @@ p {
     display: inline;
   }
 }
+
+/* the end of the history: the day the checks began */
+.began {
+  margin: 16px 4px 0;
+}

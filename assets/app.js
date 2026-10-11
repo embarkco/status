@@ -40,13 +40,28 @@ const startOfDay = (ms) => {
 
 /* ---------- incidents: the checks' and the hand-written ones, one shape ---------- */
 
+/* "A", "A and B", "A, B and C" */
+const listOf = (xs) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} and ${xs.at(-1)}`);
+
 function incidentsFrom(config, outages, notices) {
   const names = Object.fromEntries(config.components.map((c) => [c.id, c.name]));
-  const found = outages.map((o) => {
-    const name = names[o.component] ?? o.component;
-    const updates = [{ status: "Investigating", body: "We're looking into it.", at: o.start }];
-    if (o.end) updates.unshift({ status: "Resolved", body: "This is fixed, and everything is working normally.", at: o.end });
-    return { title: o.kind === "down" ? `Elevated errors on ${name}` : `${name} is slower than usual`, tone: o.kind, start: o.start, end: o.end, updates };
+  /* stretches of the same kind that overlap are one event (a deploy that
+     takes three services down for a few minutes is one incident, not three) */
+  const groups = [];
+  for (const o of [...outages].sort((a, b) => Date.parse(a.start) - Date.parse(b.start))) {
+    const end = (x) => (x.end ? Date.parse(x.end) : Infinity);
+    const g = groups.find((x) => x.kind === o.kind && Date.parse(o.start) <= Math.max(...x.items.map(end)));
+    if (g) g.items.push(o);
+    else groups.push({ kind: o.kind, items: [o] });
+  }
+  const found = groups.map(({ kind, items }) => {
+    const who = listOf([...new Set(items.map((o) => names[o.component] ?? o.component))]);
+    const start = items[0].start;
+    const over = items.every((o) => o.end);
+    const end = over ? items.map((o) => o.end).sort().at(-1) : null;
+    const updates = [{ status: "Investigating", body: "We're looking into it.", at: start }];
+    if (end) updates.unshift({ status: "Resolved", body: `Working normally again after ${length(Date.parse(end) - Date.parse(start))}.`, at: end });
+    return { title: kind === "down" ? `Elevated errors on ${who}` : `${who} ${items.length > 1 ? "are" : "is"} slower than usual`, tone: kind, start, end, updates };
   });
   const written = notices.map((n) => {
     const updates = Array.isArray(n.updates) && n.updates.length ? [...n.updates].sort((a, b) => Date.parse(b.at) - Date.parse(a.at)) : [{ status: n.end ? "Resolved" : "Update", body: n.body ?? "", at: n.end ?? n.start }];
@@ -154,7 +169,7 @@ function render(config, state, outages, notices) {
       const sum = { 90: { tracked: 0, down: 0 }, 60: { tracked: 0, down: 0 } };
       for (let i = DAYS - 1; i >= 0; i--) {
         const start = today - i * DAY;
-        const d = dayOf(outages, c.id, start, state.monitoringSince);
+        const d = dayOf(outages, c.id, start, state.components[c.id]?.monitoringSince ?? state.monitoringSince);
         for (const n of i < 60 ? [90, 60] : [90]) {
           sum[n].tracked += d.tracked;
           sum[n].down += d.down;
@@ -187,10 +202,13 @@ function render(config, state, outages, notices) {
     }),
   );
 
-  /* past incidents: the last two weeks, a heading a day */
+  /* past incidents: the last two weeks, a heading a day, from the day
+     monitoring began (a day before it isn't "no incidents", it's unknown) */
+  const began = Math.min(...[state.monitoringSince, ...Object.values(state.components).map((c) => c.monitoringSince)].filter(Boolean).map((t) => startOfDay(Date.parse(t))));
   const days = [];
   for (let i = 0; i < HISTORY_DAYS; i++) {
     const start = today - i * DAY;
+    if (Number.isFinite(began) && start < began) break;
     const those = incidents.filter((x) => startOfDay(Date.parse(x.start)) === start);
     days.push(
       el(
@@ -203,6 +221,7 @@ function render(config, state, outages, notices) {
       ),
     );
   }
+  if (Number.isFinite(began) && today - (HISTORY_DAYS - 1) * DAY < began) days.push(el("p", { class: "began muted small", text: `Monitoring began ${dayName(began)}.` }));
   document.getElementById("history").replaceChildren(...days);
 }
 
