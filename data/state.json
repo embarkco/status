@@ -1,42 +1,42 @@
 {
   "monitoringSince": "2026-10-08T16:06:17.911Z",
-  "checkedAt": "2026-10-16T00:28:48.628Z",
-  "writtenAt": "2026-10-16T00:28:48.628Z",
+  "checkedAt": "2026-10-16T04:54:20.281Z",
+  "writtenAt": "2026-10-16T04:54:20.281Z",
   "components": {
     "workspace": {
       "status": "up",
       "since": "2026-10-08T16:11:03.183Z",
-      "ms": 2221,
+      "ms": 2930,
       "monitoringSince": "2026-10-08T16:06:17.911Z"
     },
     "sites": {
       "status": "up",
       "since": "2026-10-08T16:16:04.352Z",
-      "ms": 1830,
+      "ms": 1658,
       "monitoringSince": "2026-10-08T16:06:17.911Z"
     },
     "account": {
       "status": "up",
       "since": "2026-10-08T16:20:52.326Z",
-      "ms": 2025,
+      "ms": 1784,
       "monitoringSince": "2026-10-08T16:06:17.911Z"
     },
     "widget": {
       "status": "up",
       "since": "2026-10-08T16:06:17.911Z",
-      "ms": 292,
+      "ms": 234,
       "monitoringSince": "2026-10-08T16:06:17.911Z"
     },
     "mcp": {
       "status": "up",
       "since": "2026-10-11T15:22:32.958Z",
-      "ms": 266,
+      "ms": 292,
       "monitoringSince": "2026-10-11T15:22:32.958Z"
     },
     "marketing": {
       "status": "up",
       "since": "2026-10-11T15:22:32.958Z",
-      "ms": 336,
+      "ms": 383,
       "monitoringSince": "2026-10-11T15:22:32.958Z"
     }
   }
