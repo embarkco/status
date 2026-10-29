@@ -19,5 +19,12 @@
     "start": "2026-10-08T16:06:17.911Z",
     "end": "2026-10-08T16:20:52.326Z",
     "why": "no answer in 10 s, during the Oct 8 launch deploy"
+  },
+  {
+    "component": "sites",
+    "kind": "down",
+    "start": "2026-10-29T02:44:39.315Z",
+    "end": null,
+    "why": "no answer in 15 s"
   }
 ]
