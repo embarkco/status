@@ -94,35 +94,35 @@
     "component": "workspace",
     "kind": "slow",
     "start": "2026-11-14T11:46:59.295Z",
-    "end": null,
+    "end": "2026-11-14T11:55:54.756Z",
     "why": "slow to answer"
   },
   {
     "component": "account",
     "kind": "slow",
     "start": "2026-11-14T11:46:59.295Z",
-    "end": null,
+    "end": "2026-11-14T11:55:54.756Z",
     "why": "slow to answer"
   },
   {
     "component": "widget",
     "kind": "slow",
     "start": "2026-11-14T11:46:59.295Z",
-    "end": null,
+    "end": "2026-11-14T11:55:54.756Z",
     "why": "slow to answer"
   },
   {
     "component": "mcp",
     "kind": "slow",
     "start": "2026-11-14T11:46:59.295Z",
-    "end": null,
+    "end": "2026-11-14T11:55:54.756Z",
     "why": "slow to answer"
   },
   {
     "component": "marketing",
     "kind": "slow",
     "start": "2026-11-14T11:46:59.295Z",
-    "end": null,
+    "end": "2026-11-14T11:55:54.756Z",
     "why": "slow to answer"
   }
 ]
