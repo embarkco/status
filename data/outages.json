@@ -89,5 +89,40 @@
     "start": "2026-11-14T03:31:39.319Z",
     "end": "2026-11-14T03:40:22.957Z",
     "why": "slow to answer"
+  },
+  {
+    "component": "workspace",
+    "kind": "slow",
+    "start": "2026-11-14T11:46:59.295Z",
+    "end": null,
+    "why": "slow to answer"
+  },
+  {
+    "component": "account",
+    "kind": "slow",
+    "start": "2026-11-14T11:46:59.295Z",
+    "end": null,
+    "why": "slow to answer"
+  },
+  {
+    "component": "widget",
+    "kind": "slow",
+    "start": "2026-11-14T11:46:59.295Z",
+    "end": null,
+    "why": "slow to answer"
+  },
+  {
+    "component": "mcp",
+    "kind": "slow",
+    "start": "2026-11-14T11:46:59.295Z",
+    "end": null,
+    "why": "slow to answer"
+  },
+  {
+    "component": "marketing",
+    "kind": "slow",
+    "start": "2026-11-14T11:46:59.295Z",
+    "end": null,
+    "why": "slow to answer"
   }
 ]
