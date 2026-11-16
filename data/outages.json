@@ -180,5 +180,12 @@
     "start": "2026-11-16T00:25:35.355Z",
     "end": "2026-11-16T00:54:32.471Z",
     "why": "slow to answer"
+  },
+  {
+    "component": "sites",
+    "kind": "slow",
+    "start": "2026-11-16T01:47:00.444Z",
+    "end": null,
+    "why": "slow to answer"
   }
 ]
