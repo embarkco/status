@@ -199,6 +199,27 @@
     "component": "workspace",
     "kind": "slow",
     "start": "2026-11-16T17:13:44.034Z",
+    "end": "2026-11-16T17:24:19.173Z",
+    "why": "slow to answer"
+  },
+  {
+    "component": "workspace",
+    "kind": "down",
+    "start": "2026-11-16T17:24:19.173Z",
+    "end": null,
+    "why": "no answer in 15 s"
+  },
+  {
+    "component": "sites",
+    "kind": "slow",
+    "start": "2026-11-16T17:24:19.173Z",
+    "end": null,
+    "why": "slow to answer"
+  },
+  {
+    "component": "mcp",
+    "kind": "slow",
+    "start": "2026-11-16T17:24:19.173Z",
     "end": null,
     "why": "slow to answer"
   }
