@@ -222,5 +222,12 @@
     "start": "2026-11-16T17:24:19.173Z",
     "end": "2026-11-16T17:34:51.993Z",
     "why": "slow to answer"
+  },
+  {
+    "component": "sites",
+    "kind": "slow",
+    "start": "2026-11-16T18:05:47.235Z",
+    "end": null,
+    "why": "slow to answer"
   }
 ]
