@@ -297,6 +297,13 @@
     "component": "sites",
     "kind": "slow",
     "start": "2026-11-17T20:47:13.709Z",
+    "end": "2026-11-17T20:56:04.188Z",
+    "why": "slow to answer"
+  },
+  {
+    "component": "account",
+    "kind": "slow",
+    "start": "2026-11-17T20:56:04.188Z",
     "end": null,
     "why": "slow to answer"
   }
