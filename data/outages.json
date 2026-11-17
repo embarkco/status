@@ -257,5 +257,33 @@
     "start": "2026-11-17T17:29:57.364Z",
     "end": "2026-11-17T17:38:30.952Z",
     "why": "slow to answer"
+  },
+  {
+    "component": "sites",
+    "kind": "down",
+    "start": "2026-11-17T19:46:21.695Z",
+    "end": null,
+    "why": "no answer in 15 s"
+  },
+  {
+    "component": "widget",
+    "kind": "down",
+    "start": "2026-11-17T19:46:21.695Z",
+    "end": null,
+    "why": "no answer in 15 s"
+  },
+  {
+    "component": "mcp",
+    "kind": "slow",
+    "start": "2026-11-17T19:46:21.695Z",
+    "end": null,
+    "why": "slow to answer"
+  },
+  {
+    "component": "marketing",
+    "kind": "down",
+    "start": "2026-11-17T19:46:21.695Z",
+    "end": null,
+    "why": "no answer in 15 s"
   }
 ]
