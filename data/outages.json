@@ -355,5 +355,12 @@
     "start": "2026-11-19T19:19:35.717Z",
     "end": "2026-11-19T19:28:29.006Z",
     "why": "slow to answer"
+  },
+  {
+    "component": "workspace",
+    "kind": "slow",
+    "start": "2026-11-24T20:50:30.022Z",
+    "end": null,
+    "why": "slow to answer"
   }
 ]
